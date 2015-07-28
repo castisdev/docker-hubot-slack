@@ -29,5 +29,5 @@ ADD hubot-scripts.json /root/myhubot/hubot-scripts.json
 
 # Run hubot("-a slack")
 WORKDIR /root/myhubot
-ENTRYPOINT ["/root/myhubot/bin/hubot", "-a", "slack"]
+ENTRYPOINT ["/root/myhubot/bin/hubot", "-a", "slack", "-l", "어이"]
 CMD ["-n", "hubot"]

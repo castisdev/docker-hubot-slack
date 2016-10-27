@@ -16,8 +16,8 @@ RUN cd /root && \
 
 # Set environment variables
 ENV TZ Asia/Seoul
-ENV HUBOT_JENKINS_URL http://d7.mnpk.org/jenkins
-ENV HUBOT_JIRA_URL http://d7.mnpk.org/jira
+ENV HUBOT_JENKINS_URL http://110.35.173.15/jenkins
+ENV HUBOT_JIRA_URL http://110.35.173.15:8080//jira
 ENV REDISTOGO_URL redis://172.17.42.1:6379/hubot
 
 # HTTP Listener port 9009

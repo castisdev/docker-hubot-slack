@@ -1,17 +1,21 @@
-FROM node:0.10
+FROM node:10.15
+
+RUN useradd hubot -m
 
 # Install base packages
-RUN npm install -g hubot@2.6.0 coffee-script redis
+RUN npm install -g hubot yo generator-hubot coffeescript redis
+
+USER hubot
+
+WORKDIR /home/hubot
 
 # Create new hubot and setup for slack.
-RUN cd /root && \
-  hubot --create myhubot && \
-  cd myhubot && \
+RUN yo hubot --name myhubot --defaults && \
   npm install hubot-slack --save && \
   npm install underscore xml2js cron emailjs sugar --save && \
-  npm install hubot-horse-racing hubot-magnet hubot-google hubot-figlet hubot-scripts-kor-castis hubot-map-kor --save && \
+  npm install hubot-magnet hubot-google hubot-figlet hubot-scripts-kor-castis hubot-map-kor --save && \
   npm install && \
-  echo '["hubot-horse-racing", "hubot-scripts-kor-castis", "hubot-figlet", "hubot-google", "hubot-magnet", "hubot-map-kor"]' > external-scripts.json
+  echo '["hubot-scripts-kor-castis", "hubot-figlet", "hubot-google", "hubot-magnet", "hubot-map-kor"]' > external-scripts.json
 
 
 # Set environment variables
@@ -25,9 +29,8 @@ ENV PORT 9009
 EXPOSE 9009
 
 # Add custum scripts
-ADD hubot-scripts.json /root/myhubot/hubot-scripts.json
+ADD hubot-scripts.json /home/hubot/hubot-scripts.json
 
 # Run hubot("-a slack")
-WORKDIR /root/myhubot
-ENTRYPOINT ["/root/myhubot/bin/hubot", "-a", "slack", "-l", "어이"]
+ENTRYPOINT ["/home/hubot/bin/hubot", "-a", "slack", "-l", "어이"]
 CMD ["-n", "hubot"]
